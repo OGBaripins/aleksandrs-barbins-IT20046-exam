@@ -7,9 +7,20 @@
         <div class="wrapper-profile">
             <div class="section-user">
                 <span class="avatar"></span>
-                <h3 id="txt-full-name">NAME SURNAME</h3>
+                <h3 id="txt-full-name">{{auth.user.name +" "+ auth.user.surname}}</h3>
             </div>
             <button id="btn-logout">LOGOUT</button>
         </div>
     </div>
 </template>
+
+<script>
+import {auth} from "@/stores/auth";
+export default{
+    data() {
+        return {
+            auth
+        }
+    }
+}
+</script>
