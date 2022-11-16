@@ -1,41 +1,51 @@
 <template>
-    <div id="about-view">
+<div id="album-view">
     <div class="wrapper-header">
-        <h1>ABOUT ME</h1>
+        <h1>ALBUMS</h1>
         <div class="settings">
-            <button id="btn-edit">Edit Form</button>
-            <button id="btn-save">Save Form</button>
+            <button v-bind:class="{active: this.is_active_grid}" @click="yes()" id="btn-grid"><IconGrid /></button>
+            <button v-bind:class="{active: this.is_active_list}" @click="yes()" id="btn-list"><IconList /></button>
         </div>
     </div>
-    <form>
-        <div class="wrapper-input">
-            <label>NAME</label>
-            <input id="input-name" />
-            <p id="txt-name">John</p>
-        </div>
-        <div class="wrapper-input">
-            <label>SURNAME</label>
-            <input id="input-surname" />
-            <p id="txt-surname">Smith</p>
-        </div>
-        <div class="wrapper-input">
-            <label>STUDENT CODE</label>
-            <input id="input-code" />
-            <p id="txt-code">IT1234</p>
-        </div>
-        <div class="wrapper-songs">
-            <label>FAVORITE SONGS</label>
-            <ul>
-                <li>
-                    <img id="img-album" src="https://i.scdn.co/image/ab67616d00001e02980c9d288a180838cd12ad24" />
-                    <div class="song-info">
-                        <p id="txt-song" class="song-name">DEEP (feat. Nonô)</p>
-                        <p id="txt-artist" class="song-artists">Example</p>
-                    </div>
-                </li>
-            </ul>
-            <div id="txt-empty" class="empty">NO SONGS FOUND</div>
-        </div>
-    </form>
+    <ul v-bind:class="{grid: this.is_active_grid}" id="list-albums">
+        <li @click="selectAlbum(value.album)" 
+        v-for="(value, index) in this.songs" 
+        v-bind:class="{active: value.album.id == player.getNowPlayingAlbumID()}" class="album">
+            <img id="img-album" :src="value.album.images[0].url" />
+            <div class="album-info">
+                <h4 id="txt-album-name">{{value.album.name}}</h4>
+                <p id="txt-album-artists">{{this.get_artist(value.album.artists)}}</p>
+                <div class="album-year">
+                    <p id="txt-album-year">{{value.album.release_date.split("-")[0]}}</p>
+                    <p id="txt-album-tracks">yes</p>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
 </template>
+
+<script>
+import { player } from '@/stores/player';
+import songs from "@/data/songs";
+
+export default {
+    data() {
+        return {
+            player,
+            songs,
+            is_active_grid: true,
+            is_active_list: false,
+        }
+    },
+    methods: {
+        get_artist(artist_arr){
+            return artist_arr.map(el => el.name).join(", ")
+
+        },
+        selectAlbum(){
+            
+        }
+    }
+}
+</script>

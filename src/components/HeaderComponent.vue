@@ -9,7 +9,7 @@
                 <span class="avatar"></span>
                 <h3 id="txt-full-name">{{auth.user.name +" "+ auth.user.surname}}</h3>
             </div>
-            <button id="btn-logout">LOGOUT</button>
+            <button @click="auth.logout()" id="btn-logout">LOGOUT</button>
         </div>
     </div>
 </template>
